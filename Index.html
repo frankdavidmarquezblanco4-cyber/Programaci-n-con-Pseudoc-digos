@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentos de Programación</title>
+    <!-- Fuente Open Sans para legibilidad educativa -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Paleta de Colores: Clean Educational */
+        :root {
+            --color-bg-light: #f7f9fc; 
+            --color-primary-blue: #1976d2; 
+            --color-secondary-cyan: #00bcd4; 
+            --color-text-dark: #2c3e50; 
+            --color-card-bg: #fff;
+            --color-hover-shadow: rgba(25, 118, 210, 0.25);
+            --color-code-bg: #e8f5e9; 
+            --color-info-card: #e3f2fd; 
+            --color-success: #4caf50; 
+            --color-error: #f44336; 
+            --color-action: #ff9800; /* Naranja para botones de acción */
+            --color-placeholder: #cfd8dc; /* Gris claro para placeholders */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--color-bg-light);
+            color: var(--color-text-dark);
+            line-height: 1.7; 
+        }
+
+        /* ------------------ NAVEGACIÓN PEGADIZA (STICKY) ------------------ */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: var(--color-card-bg);
+            border-bottom: 4px solid var(--color-primary-blue); 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 0.75rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap; 
+            justify-content: center;
+            align-items: center;
+            padding: 0 1rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--color-primary-blue);
+            font-weight: 700;
+            padding: 0.5rem 0.8rem;
+            margin: 0.25rem 0.5rem;
+            border-radius: 20px; 
+            transition: background-color 0.3s, color 0.3s;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        .nav-link:hover {
+            background-color: var(--color-secondary-cyan);
+            color: var(--color-card-bg);
+        }
+
+        /* ------------------ ESTRUCTURA PRINCIPAL ------------------ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Header / Hero Section */
+        header {
+            text-align: center;
+            padding: 5rem 2rem;
+            background: var(--color-primary-blue);
+            color: white;
+            margin-bottom: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        /* Sección de Componentes (Tarjetas) */
+        .component-section {
+            background-color: var(--color-card-bg);
+            padding: 3rem;
+            margin-bottom: 2rem;
+            border-radius: 16px; 
+            border: 1px solid #e0e0e0; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s;
+        }
+
+        .component-section:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px var(--color-hover-shadow);
+        }
+
+        .component-section h2 {
+            color: var(--color-secondary-cyan);
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            border-left: 6px solid var(--color-secondary-cyan); 
+            padding-left: 1rem;
+            line-height: 1.2;
+        }
+
+        /* Contenedor flexible para ejemplos */
+        .details-list {
+            list-style-type: none;
+            margin-top: 1.5rem;
+        }
+        
+        .details-list li {
+            background-color: var(--color-info-card);
+            border-left: 5px solid var(--color-primary-blue);
+            padding: 1rem 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        
+        .details-list p {
+            font-weight: 400;
+            margin-top: 0.5rem;
+            border-top: 1px dashed #bbdefb;
+            padding-top: 0.5rem;
+        }
+
+        /* Estilo para bloques de código */
+        .code-block {
+            background-color: var(--color-code-bg);
+            border: 1px solid #b2dfdb; 
+            padding: 1.2rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monospace', monospace;
+            white-space: pre-wrap; 
+            color: #004d40; 
+            font-size: 1rem;
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Contenedor de imagen y estilos de imagen */
+        .visual-container {
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            padding: 5px; 
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .visual-container img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 6px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Placeholder para contenido sin imagen */
+        .placeholder-box {
+            background-color: var(--color-placeholder);
+            color: var(--color-text-dark);
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            font-weight: 600;
+            font-style: italic;
+        }
+
+
+        /* ------------------ INTERACTIVOS PSeInt ------------------ */
+
+        .interactive-area {
+            background-color: #fff8e1; /* Amarillo pálido para interactividad */
+            border: 2px solid var(--color-action);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .interactive-area label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .interactive-area input[type="number"], .interactive-area input[type="text"] {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 200px; /* Limitar el ancho de los inputs */
+        }
+
+        .interactive-output {
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            background-color: #e0e0e0;
+            min-height: 40px;
+            font-family: 'Consolas', monospace;
+            color: var(--color-text-dark);
+            white-space: pre-wrap;
+        }
+
+        .action-button {
+            background-color: var(--color-action);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .action-button:hover {
+            background-color: #fb8c00;
+            transform: translateY(-1px);
+        }
+
+
+        /* ------------------ CUESTIONARIO (Estilos Detallados de Resultados) ------------------ */
+
+        #quiz-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        /* Botón para generar un nuevo cuestionario */
+        #new-quiz-button {
+            background-color: var(--color-secondary-cyan);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 700;
+            transition: background-color 0.3s, transform 0.1s;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            align-self: flex-start;
+        }
+        
+        #new-quiz-button:hover {
+             background-color: #008c9e; 
+            transform: translateY(-2px);
+        }
+
+        .question-card {
+            background-color: #f0f8ff; 
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid var(--color-primary-blue);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            position: relative; /* Para la marca de estado */
+        }
+
+        .question-card p {
+            font-weight: 600;
+            color: var(--color-text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .options-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+            position: relative;
+        }
+        
+        /* Ocultar inputs/radios en el modo de revisión para dar formato */
+        .options-group.reviewed label {
+            cursor: default;
+            padding-left: 1rem;
+        }
+
+        .options-group.reviewed input[type="radio"] {
+            display: none;
+        }
+
+        .options-group label:hover:not(.reviewed label) {
+            background-color: #e3f2fd;
+        }
+
+        .options-group input[type="radio"] {
+            margin-right: 0.75rem;
+            accent-color: var(--color-primary-blue);
+        }
+
+        .submit-button {
+            background-color: var(--color-success);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 700;
+            transition: background-color 0.3s, transform 0.1s;
+            align-self: flex-start;
+        }
+
+        .submit-button:hover {
+            background-color: #388e3c; 
+            transform: translateY(-2px);
+        }
+
+        #results {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 10px;
+            font-weight: 700;
+            text-align: center;
+            font-size: 1.2rem;
+            border: 2px solid;
+        }
+
+        .result-success {
+            background-color: #e8f5e9;
+            border-color: var(--color-success);
+            color: var(--color-success);
+        }
+
+        .result-fail {
+            background-color: #ffebee;
+            border-color: var(--color-error);
+            color: var(--color-error);
+        }
+
+        /* Estilos de la Revisión Detallada */
+        #detailed-results {
+            margin-top: 2rem;
+        }
+        
+        .result-item {
+            border: 1px solid #ccc;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .result-item.correct {
+            border-left: 5px solid var(--color-success);
+            background-color: #f6fff6;
+        }
+
+        .result-item.incorrect {
+            border-left: 5px solid var(--color-error);
+            background-color: #fffafa;
+        }
+
+        .result-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--color-primary-blue);
+        }
+
+        .result-detail {
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .user-choice, .correct-answer, .rationale-text {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+        
+        .correct-answer {
+            color: var(--color-success);
+            font-weight: 700;
+        }
+
+        .user-choice.wrong {
+            color: var(--color-error);
+            font-weight: 700;
+        }
+
+        .rationale-text {
+            color: var(--color-text-dark);
+            border-top: 1px dashed #ddd;
+            padding-top: 0.5rem;
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: #d8e6f3; 
+            color: var(--color-text-dark);
+            margin-top: 3rem;
+            border-radius: 12px 12px 0 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Barra de Navegación Pegadiza (Sticky Navbar) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#inicio" class="nav-link">Inicio</a>
+            <a href="#pseudocodigo" class="nav-link">Pseudocódigo</a>
+            <a href="#dfd" class="nav-link">DFD (Diagramas)</a>
+            <a href="#psint" class="nav-link">PSeInt (Ejecución)</a>
+            <a href="#scratch" class="nav-link">Scratch (Bloques)</a>
+            <a href="#glosario" class="nav-link">Glosario</a>
+            <a href="#cuestionario" class="nav-link">Cuestionario</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <!-- Header / Sección de Inicio -->
+        <header id="inicio">
+            <h1>💻 Fundamentos de Programación: Lógica y Herramientas</h1>
+            <p>Aprende la lógica de programación básica y las herramientas esenciales para construir tus primeros algoritmos.</p>
+        </header>
+
+        <!-- Sección 1: El Pseudocódigo (Base Teórica) -->
+        <section id="pseudocodigo" class="component-section">
+            <h2>1. El Pseudocódigo: El Lenguaje del Pensamiento</h2>
+            <p>El pseudocódigo es el primer borrador de un programa. Actúa como un puente entre nuestro lenguaje natural (español) y el lenguaje que la computadora entiende. Su objetivo principal es permitirte concentrarte exclusivamente en la **lógica del algoritmo** (qué hacer y en qué orden), sin la rigidez de la sintaxis de un lenguaje de programación real.</p>
+            
+            <p><strong>¿Cómo se utiliza?</strong></p>
+            <p>Se estructura típicamente en cuatro pasos fundamentales que reflejan la ejecución de cualquier programa:</p>
+            <ul class="details-list">
+                <li>
+                    Definición
+                    <p>En esta etapa, se declaran todas las **variables** y **constantes** que se usarán en el programa, especificando su tipo de dato (Entero, Real, Carácter, Lógico).</p>
+                </li>
+                <li>
+                    Entrada de Datos (Input)
+                    <p>Son las instrucciones que permiten al algoritmo recibir información del exterior, usualmente del usuario (e.g., usando la instrucción <code>Leer</code>). Esto hace que el programa sea dinámico.</p>
+                </li>
+                <li>
+                    Proceso / Lógica
+                    <p>Es el corazón del algoritmo. Aquí se realizan los cálculos, las asignaciones de variables y se implementan las **estructuras de control de flujo** (condicionales y bucles) que definen el comportamiento del programa.</p>
+                </li>
+                <li>
+                    Salida de Resultados (Output)
+                    <p>Se utilizan instrucciones para mostrar los resultados, mensajes o estados finales del programa al usuario (e.g., usando la instrucción <code>Escribir</code>).</p>
+                </li>
+            </ul>
+        </section>
+        
+        <!-- Sección 2: DFD - Diagramas de Flujo de Datos (3 Ejemplos con Imágenes) -->
+        <section id="dfd" class="component-section">
+            <h2>2. DFD: El Flujo Visual de la Lógica</h2>
+            <p>El Diagrama de Flujo de Datos (DFD) es una representación gráfica de tu pseudocódigo. Es una herramienta poderosa para **visualizar la secuencia de ejecución**, facilitando la detección de errores de lógica (bugs) y asegurando que cada paso se conecte correctamente.</p>
+            
+            <p><strong>¿Cómo se utiliza?</strong></p>
+            <p>Se utiliza un conjunto de símbolos geométricos estandarizados, interconectados por flechas, para mostrar la dirección del flujo. Los cuatro símbolos principales son:</p>
+            <ul class="details-list">
+                <li>
+                    Óvalo (Terminador)
+                    <p>Marca el punto de **INICIO** y el punto de **FIN** del algoritmo. Siempre hay uno de inicio y uno de fin.</p>
+                </li>
+                <li>
+                    Paralelogramo (Entrada/Salida)
+                    <p>Representa las operaciones de **interacción con el usuario**, como la lectura de datos (Entrada) o la impresión de resultados (Salida) en la pantalla.</p>
+                </li>
+                <li>
+                    Rectángulo (Proceso)
+                    <p>Representa cualquier **operación interna** del algoritmo: cálculos matemáticos, asignaciones de variables y procesamiento de datos.</p>
+                </li>
+                <li>
+                    Rombo (Decisión/Condicional)
+                    <p>Introduce una **pregunta lógica** (una condición). El flujo se bifurca en dos o más caminos (Verdadero/Falso) dependiendo del resultado de la condición, implementando la estructura <code>Si-Entonces-SiNo</code>.</p>
+                </li>
+            </ul>
+            <p style="margin-top: 1.5rem; font-style: italic;">[Image of basic DFD symbols] La visualización es clave: las flechas (líneas de flujo) guían la ejecución desde el inicio hasta el fin, asegurando que la lógica no tenga cabos sueltos.</p>
+        </section>
+
+        <!-- Sección 3: PSeInt - Practicando el Pseudocódigo (3 Ejemplos) -->
+        <section id="psint" class="component-section">
+            <h2>3. PSeInt: El Laboratorio de Ejecución</h2>
+            <p>PSeInt (PSeudo Intérprete) es un software educativo gratuito diseñado para ayudar a los estudiantes a dar sus primeros pasos en programación, utilizando el pseudocódigo en español.</p>
+            
+            <p><strong>¿Cómo se utiliza?</strong></p>
+            <ul class="details-list">
+                <li>
+                    Escritura y Verificación
+                    <p>Permite escribir pseudocódigo de forma estructurada. El programa resalta la sintaxis y advierte sobre errores comunes (como el uso incorrecto de mayúsculas/minúsculas o el cierre de estructuras). Esto refuerza la práctica de la sintaxis.</p>
+                </li>
+                <li>
+                    Generación de DFD
+                    <p>Una de sus características más valiosas es la capacidad de generar automáticamente el Diagrama de Flujo de Datos (DFD) a partir del pseudocódigo escrito. Esto permite al estudiante ver instantáneamente la representación gráfica de su lógica.</p>
+                </li>
+                <li>
+                    Simulación y Depuración
+                    <p>PSeInt puede **ejecutar el pseudocódigo paso a paso**, mostrando cómo cambian los valores de las variables en tiempo real. Esta simulación (depuración) es crucial para entender dónde y por qué la lógica de un algoritmo podría fallar.</p>
+                </li>
+            </ul>
+
+            <!-- Zona de Interacción para PSeInt -->
+            <h3 style="margin-top: 2.5rem; color: var(--color-action);">Prueba Interactiva (Simulador PSeInt)</h3>
+            <p>Usa estos simuladores para validar cómo las diferentes estructuras lógicas funcionan con valores de prueba. ¡La salida simula la consola de PSeInt!</p>
+            
+            <!-- Simulador 1: Suma Simple -->
+            <div class="interactive-area">
+                <h4>Simulador 3.1: Suma Simple (Secuencia)</h4>
+                <div style="display: flex; gap: 1rem; align-items: flex-end;">
+                    <div>
+                        <label for="num1">Número 1:</label>
+                        <input type="number" id="num1" value="10" placeholder="Ingrese el primer número">
+                    </div>
+                    <div>
+                        <label for="num2">Número 2:</label>
+                        <input type="number" id="num2" value="5" placeholder="Ingrese el segundo número">
+                    </div>
+                    <button class="action-button" onclick="runSumaSimple()">Ejecutar Suma</button>
+                </div>
+                <div class="interactive-output" id="output_suma">Esperando que presiones 'Ejecutar Suma' con valores.</div>
+            </div>
+
+            <!-- Simulador 2: Par o Impar -->
+            <div class="interactive-area">
+                <h4>Simulador 3.2: Par o Impar (Condicional)</h4>
+                <div style="display: flex; gap: 1rem; align-items: flex-end;">
+                    <div>
+                        <label for="num_parimpar">Número a verificar:</label>
+                        <input type="number" id="num_parimpar" value="7" placeholder="Ingrese un número entero">
+                    </div>
+                    <button class="action-button" onclick="runParOImpar()">Ejecutar Condicional</button>
+                </div>
+                <div class="interactive-output" id="output_parimpar">Esperando que presiones 'Ejecutar Condicional' con un valor.</div>
+            </div>
+
+            <!-- Simulador 3: Bucle "Para" (PERSONALIZADO) -->
+            <div class="interactive-area">
+                <h4>Simulador 3.3: Bucle "Para" (Contador Personalizado)</h4>
+                <p><strong>Instrucción:</strong> Contar automáticamente del 1 hasta el número que ingreses. **El límite debe ser un número entre 1 y 100.**</p>
+                <div style="display: flex; gap: 1rem; align-items: flex-end;">
+                    <div>
+                        <label for="num_limite">Límite del Contador (1 a 100):</label>
+                        <input type="number" id="num_limite" value="5" min="1" max="100" placeholder="Ej: 15">
+                    </div>
+                    <button class="action-button" onclick="runContadorPersonalizado()">Ejecutar Bucle</button>
+                </div>
+                <div class="interactive-output" id="output_contador">Presiona 'Ejecutar Bucle' para ver la secuencia.</div>
+            </div>
+        </section>
+
+        <!-- Sección 4: Scratch - Programación Visual para Principiantes (3 Ejemplos con Imágenes) -->
+        <section id="scratch" class="component-section">
+            <h2>4. Scratch: Programación Visual por Bloques</h2>
+            <p>Scratch es un lenguaje de programación visual basado en bloques desarrollado por el MIT Media Lab, ideal para niños y principiantes absolutos. Su enfoque es enseñar el pensamiento computacional y la lógica **sin necesidad de escribir código de texto**.</p>
+            
+            <p><strong>¿Cómo se utiliza?</strong></p>
+            <p>La lógica se construye arrastrando y soltando bloques de colores que encajan. Cada color representa una categoría de comandos (Movimiento, Apariencia, Control, Eventos, etc.).</p>
+            <ul class="details-list">
+                <li>
+                    Eliminación de Errores de Sintaxis
+                    <p>Al ser un sistema de bloques que solo encajan de formas válidas, Scratch elimina la posibilidad de cometer errores de sintaxis, permitiendo al estudiante centrarse 100% en la lógica algorítmica.</p>
+                </li>
+                <li>
+                    Estructuras de Control Visuales
+                    <p>Las estructuras lógicas como el **Bucle** (bloques "Repetir" o "Por Siempre") y el **Condicional** (bloque "Si... Entonces") tienen representaciones físicas (bloques con bocas o hendiduras) que hacen intuitivo ver dónde y cuándo se ejecuta el código.</p>
+                </li>
+                <li>
+                    Enfoque en Proyectos
+                    <p>Scratch fomenta la creación de historias interactivas, juegos y animaciones, haciendo que el aprendizaje de la lógica sea un proceso divertido y orientado a resultados visuales inmediatos.</p>
+                </li>
+            </ul>
+             <p style="margin-top: 1.5rem; font-style: italic;"> El sistema de bloques hace que la programación se sienta como armar un rompecabezas, donde la lógica es la clave para que las piezas encajen correctamente.</p>
+        </section>
+
+        <!-- Sección 5: Glosario de Conceptos -->
+        <section id="glosario" class="component-section">
+            <h2>5. Glosario de Conceptos Clave</h2>
+            
+            <div class="glossary-term">
+                <h3>Algoritmo</h3>
+                <p>Conjunto finito y ordenado de pasos lógicos y no ambiguos diseñado para resolver un problema específico o realizar una tarea.</p>
+            </div>
+            
+            <div class="glossary-term">
+                <h3>Variable</h3>
+                <p>Un espacio de memoria reservado en el programa para almacenar un valor que puede cambiar durante su ejecución (ej. la edad del usuario).</p>
+            </div>
+            
+            <div class="glossary-term">
+                <h3>Condicional (Decisión)</h3>
+                <p>Una estructura de control de flujo que permite al algoritmo ejecutar diferentes acciones dependiendo de si una condición lógica es verdadera o falsa (<code>Si... Entonces</code>).</p>
+            </div>
+            
+            <div class="glossary-term">
+                <h3>Bucle (Ciclo)</h3>
+                <p>Una estructura de control que permite repetir un bloque de código varias veces. Los más comunes son <code>Mientras</code> y <code>Para</code>.</p>
+            </div>
+        </section>
+
+        <!-- Sección 6: Cuestionario Dinámico -->
+        <section id="cuestionario" class="component-section">
+            <h2>6. Cuestionario de Lógica (10 Preguntas Aleatorias)</h2>
+            <p>Pon a prueba tus conocimientos con una selección de 10 preguntas diferentes cada vez que inicies o presiones "Nuevo Cuestionario".</p>
+            
+            <!-- Botón para generar un nuevo cuestionario -->
+            <button id="new-quiz-button" onclick="renderQuiz()">Generar Nuevo Cuestionario</button>
+
+            <form id="quiz-form">
+                <!-- Las preguntas se inyectarán aquí con JavaScript -->
+            </form>
+
+            <button class="submit-button" onclick="checkQuiz()">Terminar y Revisar</button>
+
+            <div id="results" style="display: none;"></div>
+            <div id="detailed-results"></div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Taller de Lógica de Programación EdTech &copy; 2025</p>
+    </footer>
+
+    <script>
+        // Constantes de color para la salida de JS 
+        const COLOR_ERROR = '#f44336'; 
+        const COLOR_TEXT_DARK = '#2c3e50'; 
+        const COLOR_SUCCESS = '#4caf50';
+        const COLOR_PRIMARY_BLUE = '#1976d2';
+
+        // Funciones de Lógica de los Simuladores PSeInt
+        function runSumaSimple() {
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+            const output = document.getElementById('output_suma');
+            
+            if (isNaN(num1) || isNaN(num2)) {
+                output.textContent = "ERROR: Por favor, ingrese dos números válidos.";
+                output.style.color = COLOR_ERROR; 
+                return;
+            }
+
+            // Proceso: suma = num1 + num2
+            const suma = num1 + num2;
+            
+            output.textContent = `
+> Ejecutando SumaSimple...
+> Ingrese primer número: ${num1}
+> Ingrese segundo número: ${num2}
+> PROCESO: ${num1} + ${num2} = ${suma}
+> La suma es: ${suma.toFixed(2)}
+`;
+            output.style.color = COLOR_TEXT_DARK; 
+        }
+
+        function runParOImpar() {
+            const numInput = document.getElementById('num_parimpar').value;
+            const num = parseInt(numInput, 10);
+            const output = document.getElementById('output_parimpar');
+
+            if (isNaN(num) || numInput.trim() === '') {
+                output.textContent = "ERROR: Por favor, ingrese un número entero válido.";
+                output.style.color = COLOR_ERROR; 
+                return;
+            }
+
+            let resultado = "";
+
+            // Lógica: Si num MOD 2 == 0 Entonces...
+            if (num % 2 === 0) {
+                resultado = "El número es Par.";
+            } else {
+                resultado = "El número es Impar.";
+            }
+
+            output.textContent = `
+> Ejecutando ParOImpar...
+> Ingrese un número: ${num}
+> CONDICIONAL: ${num} MOD 2
+> ${resultado}
+`;
+            output.style.color = COLOR_TEXT_DARK; 
+        }
+
+        function runContadorPersonalizado() {
+            const limitInput = document.getElementById('num_limite').value;
+            const limit = parseInt(limitInput, 10);
+            const output = document.getElementById('output_contador');
+
+            // 1. Validaciones
+            if (isNaN(limit) || limitInput.trim() === '') {
+                output.textContent = "ERROR: Por favor, ingrese un número entero.";
+                output.style.color = COLOR_ERROR;
+                return;
+            }
+
+            if (limit < 1 || limit > 100) {
+                output.textContent = `ERROR: El número ingresado (${limit}) está fuera del rango establecido. Por favor, ingrese un número entre 1 y 100.`;
+                output.style.color = COLOR_ERROR;
+                return;
+            }
+
+            // 2. Ejecución de la Lógica (Bucle Para)
+            let log = "> Ejecutando ContadorPersonalizado...\n";
+            log += `> Límite establecido: ${limit}\n`;
+            log += "> INICIO BUCLE (Para i = 1 Hasta " + limit + " Con Paso 1 Hacer):\n";
+
+            // Lógica: Para i = 1 Hasta [límite] Con Paso 1 Hacer
+            for (let i = 1; i <= limit; i++) {
+                // En PSeInt la acción sería Escribir "Contando: ", i
+                log += `  - Contando: ${i}\n`;
+            }
+
+            log += "> FIN BUCLE.";
+
+            output.textContent = log;
+            output.style.color = COLOR_TEXT_DARK;
+        }
+
+        // --------------------------------------------------------
+        // Funciones del Cuestionario (Modificadas para Racionales)
+        // --------------------------------------------------------
+
+        const allQuestions = [
+            {
+                question: "¿Cuál es el objetivo principal del Pseudocódigo?",
+                options: [
+                    { text: "Ejecutar código directamente en la máquina.", isCorrect: false, rationale: "El pseudocódigo es un borrador lógico, no un lenguaje de ejecución para la máquina." },
+                    { text: "Enfocarse en la lógica del algoritmo antes que en la sintaxis.", isCorrect: true, rationale: "El pseudocódigo permite planificar la solución concentrándose en los pasos lógicos, sin preocuparse por la sintaxis estricta." },
+                    { text: "Crear interfaces gráficas complejas.", isCorrect: false, rationale: "Esta es una tarea de diseño UI/UX y lenguajes de programación específicos (como HTML/CSS/JS)." },
+                    { text: "Realizar pruebas de rendimiento de software.", isCorrect: false, rationale: "Esto se hace con software especializado y en entornos de ejecución reales, no con pseudocódigo." }
+                ]
+            },
+            {
+                question: "¿Qué símbolo de DFD se utiliza para una acción o cálculo (Proceso)?",
+                options: [
+                    { text: "Óvalo", isCorrect: false, rationale: "El Óvalo (o Terminador) solo se usa para marcar el INICIO y el FIN del algoritmo." },
+                    { text: "Rombo", isCorrect: false, rationale: "El Rombo (o Decisión) se usa para evaluar una condición lógica (Si/Entonces)." },
+                    { text: "Paralelogramo", isCorrect: false, rationale: "El Paralelogramo (o Entrada/Salida) se usa para Leer datos o Escribir resultados." },
+                    { text: "Rectángulo", isCorrect: true, rationale: "El Rectángulo se utiliza para cualquier operación interna del algoritmo, como cálculos matemáticos o asignaciones de variables." }
+                ]
+            },
+            {
+                question: "¿Qué estructura de control se utiliza para repetir un bloque de código varias veces?",
+                options: [
+                    { text: "Condicional", isCorrect: false, rationale: "La estructura condicional solo permite elegir un camino entre varios, no repetir instrucciones." },
+                    { text: "Definición", isCorrect: false, rationale: "La definición es una etapa para declarar variables, no una estructura de control de flujo." },
+                    { text: "Bucle (Ciclo)", isCorrect: true, rationale: "El bucle, o ciclo (Para, Mientras), permite ejecutar el mismo conjunto de instrucciones hasta que se cumpla una condición o un número fijo de veces." },
+                    { text: "Asignación", isCorrect: false, rationale: "La asignación es la acción de dar un valor a una variable (ej. `x = 5`), no una estructura de repetición." }
+                ]
+            },
+            {
+                question: "En pseudocódigo, ¿qué palabra clave se utiliza típicamente para obtener datos del usuario?",
+                options: [
+                    { text: "Escribir", isCorrect: false, rationale: "La palabra 'Escribir' se usa para mostrar mensajes o resultados en la pantalla." },
+                    { text: "Definir", isCorrect: false, rationale: "La palabra 'Definir' se usa para declarar las variables y su tipo de dato (Entero, Real, etc.)." },
+                    { text: "Leer", isCorrect: true, rationale: "La palabra clave 'Leer' detiene la ejecución del algoritmo y espera que el usuario ingrese un valor, almacenándolo en una variable." },
+                    { text: "Proceso", isCorrect: false, rationale: "La palabra 'Proceso' se usa en PSeInt para englobar las instrucciones, pero no para la entrada de datos específica." }
+                ]
+            },
+            {
+                question: "¿Qué significa el término 'Algoritmo'?",
+                options: [
+                    { text: "Una variable que nunca cambia.", isCorrect: false, rationale: "Esto describe una constante, no un algoritmo." },
+                    { text: "Un conjunto de instrucciones visuales.", isCorrect: false, rationale: "Si bien los DFD son visuales, la definición de algoritmo aplica al concepto abstracto de los pasos lógicos." },
+                    { text: "Un conjunto finito y ordenado de pasos para resolver un problema.", isCorrect: true, rationale: "Un algoritmo debe ser finito (tener fin), ordenado (pasos secuenciales) y no ambiguo para ser funcional." },
+                    { text: "El resultado final de un cálculo.", isCorrect: false, rationale: "El resultado es la salida (Output) del algoritmo, no el algoritmo en sí." }
+                ]
+            },
+            {
+                question: "¿Qué herramienta se caracteriza por utilizar la programación visual por bloques?",
+                options: [
+                    { text: "PSeInt", isCorrect: false, rationale: "PSeInt utiliza pseudocódigo (texto), aunque puede generar DFD visuales." },
+                    { text: "Pseudocódigo", isCorrect: false, rationale: "El pseudocódigo es un lenguaje escrito en texto (español)." },
+                    { text: "DFD", isCorrect: false, rationale: "El DFD usa símbolos geométricos para el flujo, no bloques de programación encajables." },
+                    { text: "Scratch", isCorrect: true, rationale: "Scratch fue diseñado específicamente para que los principiantes aprendan lógica arrastrando y encajando bloques de código visuales." }
+                ]
+            },
+            {
+                question: "¿Qué símbolo de DFD representa un punto de bifurcación o Decisión?",
+                options: [
+                    { text: "Rectángulo", isCorrect: false, rationale: "El rectángulo representa un proceso o cálculo interno." },
+                    { text: "Rombo", isCorrect: true, rationale: "El Rombo evalúa una condición (ej. ¿es Par?) y bifurca el flujo a una de dos o más salidas (Verdadero o Falso)." },
+                    { text: "Óvalo", isCorrect: false, rationale: "El óvalo es el terminador (Inicio/Fin)." },
+                    { text: "Flecha", isCorrect: false, rationale: "La flecha indica la dirección del flujo de la lógica." }
+                ]
+            },
+            {
+                question: "La estructura de control 'Si... Entonces' corresponde a un:",
+                options: [
+                    { text: "Bucle", isCorrect: false, rationale: "El bucle se usa para repetición; la estructura 'Si... Entonces' se usa para elección." },
+                    { text: "Proceso", isCorrect: false, rationale: "Un proceso es una operación simple, no una estructura de control de flujo." },
+                    { text: "Condicional (Decisión)", isCorrect: true, rationale: "Un condicional permite tomar decisiones basadas en una condición lógica, como 'Si hace sol, Entonces llevo gafas'." },
+                    { text: "Subproceso", isCorrect: false, rationale: "Un subproceso es un bloque de código reutilizable (una función), no una decisión." }
+                ]
+            },
+            {
+                question: "¿Qué ventaja ofrece PSeInt a los principiantes?",
+                options: [
+                    { text: "Compilar a código de máquina.", isCorrect: false, rationale: "PSeInt es un intérprete de pseudocódigo, no un compilador para código de máquina profesional." },
+                    { text: "Ejecutar y depurar pseudocódigo paso a paso.", isCorrect: true, rationale: "PSeInt permite ver exactamente cómo se comportan las variables en tiempo real, lo que es esencial para depurar errores de lógica." },
+                    { text: "Diseñar interfaces gráficas 3D.", isCorrect: false, rationale: "PSeInt se enfoca en la lógica algorítmica y la consola de texto, no en gráficos avanzados." },
+                    { text: "Conectarse a bases de datos grandes.", isCorrect: false, rationale: "Esta es una función de lenguajes de programación profesionales como Python o Java." }
+                ]
+            },
+            {
+                question: "El Paralelogramo en un DFD se usa para:",
+                options: [
+                    { text: "Cálculos complejos.", isCorrect: false, rationale: "Los cálculos se realizan dentro del símbolo de Rectángulo (Proceso)." },
+                    { text: "Asignaciones de valor.", isCorrect: false, rationale: "Las asignaciones de valor (ej. `x=1`) se hacen en el Rectángulo (Proceso)." },
+                    { text: "Lectura o impresión de datos (Entrada/Salida).", isCorrect: true, rationale: "El Paralelogramo simboliza la interacción con el exterior del algoritmo, ya sea recibiendo datos del usuario o mostrando resultados." },
+                    { text: "Bifurcación de flujo.", isCorrect: false, rationale: "La bifurcación de flujo se representa con el Rombo (Decisión)." }
+                ]
+            },
+            {
+                question: "¿Qué tipo de dato en PSeInt se usaría para almacenar la edad de una persona?",
+                options: [
+                    { text: "Real", isCorrect: false, rationale: "El tipo Real se usa para números decimales o flotantes, como 3.14 o 15.5." },
+                    { text: "Lógico", isCorrect: false, rationale: "El tipo Lógico (Booleano) se usa para almacenar solo Verdadero o Falso." },
+                    { text: "Carácter", isCorrect: false, rationale: "El tipo Carácter se usa para almacenar una letra o un símbolo, o una cadena de texto (String)." },
+                    { text: "Entero", isCorrect: true, rationale: "El tipo Entero se usa para números sin decimales, que es la forma más común de representar la edad." }
+                ]
+            },
+            {
+                question: "¿Cuál es una de las principales diferencias entre el pseudocódigo y un lenguaje de programación real (como Python)?",
+                options: [
+                    { text: "El pseudocódigo usa estructuras de control, y Python no.", isCorrect: false, rationale: "Ambos usan estructuras de control (condicionales, bucles)." },
+                    { text: "El pseudocódigo puede ser interpretado directamente por la computadora.", isCorrect: false, rationale: "Solo los lenguajes de programación reales son interpretados/compilados por la computadora." },
+                    { text: "El pseudocódigo no tiene sintaxis estricta, el lenguaje real sí.", isCorrect: true, rationale: "La principal ventaja del pseudocódigo es que se enfoca en la lógica sin la rigidez de la sintaxis del lenguaje de programación." },
+                    { text: "El pseudocódigo solo se usa para sumas.", isCorrect: false, rationale: "El pseudocódigo puede modelar cualquier complejidad algorítmica." }
+                ]
+            },
+            {
+                question: "¿Cuál es el propósito del bloque 'Por Siempre' en Scratch?",
+                options: [
+                    { text: "Ejecutar el código una sola vez.", isCorrect: false, rationale: "Esto es la función de un evento simple como 'al hacer clic en la bandera verde'." },
+                    { text: "Permitir al usuario cambiar las variables.", isCorrect: false, rationale: "Esto es una función de los bloques de 'Variables' y 'Sensores'." },
+                    { text: "Repetir indefinidamente las instrucciones que contiene.", isCorrect: true, rationale: "El bloque 'Por Siempre' es un bucle infinito que asegura que el código interno se ejecute continuamente (ideal para juegos y animaciones)." },
+                    { text: "Detener la ejecución del programa.", isCorrect: false, rationale: "Esto se hace con el bloque 'Detener todos'." }
+                ]
+            },
+            {
+                question: "En un bucle 'Para i = 1 Hasta 5 Con Paso 2 Hacer', ¿qué valores tomará la variable 'i'?",
+                options: [
+                    { text: "1, 2, 3, 4, 5", isCorrect: false, rationale: "Esto sería si el 'Paso' fuera 1 (el valor por defecto)." },
+                    { text: "1, 3, 5", isCorrect: true, rationale: "Comienza en 1, incrementa 2 (llega a 3), incrementa 2 (llega a 5), y se detiene porque el siguiente paso (7) excede el límite (5)." },
+                    { text: "2, 4", isCorrect: false, rationale: "Esto solo ocurre si la variable comienza en 2." },
+                    { text: "1, 5", isCorrect: false, rationale: "Se salta el paso intermedio (3)." }
+                ]
+            }
+        ];
+
+        let selectedQuestions = []; // Almacena las 10 preguntas seleccionadas al azar
+
+        /**
+         * Función genérica para barajar (mezclar) un array.
+         * @param {Array} array - El array a mezclar.
+         */
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Intercambio de elementos (ES6)
+            }
+        }
+
+        /**
+         * Selecciona 10 preguntas al azar del pool, las renderiza y limpia el estado anterior.
+         */
+        function renderQuiz() {
+            // 1. Limpiar resultados y ocultar
+            document.getElementById('detailed-results').innerHTML = '';
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('quiz-form').innerHTML = '';
+
+            // 2. Seleccionar 10 preguntas al azar
+            shuffleArray(allQuestions);
+            selectedQuestions = allQuestions.slice(0, 10); // Tomar las primeras 10 (ya barajadas)
+
+            const quizForm = document.getElementById('quiz-form');
+
+            selectedQuestions.forEach((q, index) => {
+                const qCard = document.createElement('div');
+                qCard.classList.add('question-card');
+                qCard.id = `q_card_${index}`;
+                
+                const qText = document.createElement('p');
+                qText.textContent = `${index + 1}. ${q.question}`; 
+                qCard.appendChild(qText);
+
+                const optionsGroup = document.createElement('div');
+                optionsGroup.classList.add('options-group');
+
+                // 3. Barajar las opciones de la pregunta
+                const shuffledOptions = [...q.options];
+                shuffleArray(shuffledOptions);
+
+                shuffledOptions.forEach(option => {
+                    const label = document.createElement('label');
+                    const input = document.createElement('input');
+                    
+                    input.type = 'radio';
+                    input.name = `question_${index}`;
+                    input.value = option.text;
+                    
+                    label.appendChild(input);
+                    label.appendChild(document.createTextNode(option.text));
+                    optionsGroup.appendChild(label);
+                });
+
+                qCard.appendChild(optionsGroup);
+                quizForm.appendChild(qCard);
+            });
+            
+             // Habilitar el botón de revisión
+            document.querySelector('.submit-button').style.display = 'block';
+        }
+
+        /**
+         * Busca el texto de la respuesta correcta.
+         * @param {Array} options - Arreglo de opciones de una pregunta.
+         * @returns {string} El texto de la opción correcta.
+         */
+        function getCorrectAnswerText(options) {
+            const correctOption = options.find(opt => opt.isCorrect);
+            return correctOption ? correctOption.text : 'N/A';
+        }
+        
+        /**
+         * Busca la explicación (rationale) para la opción seleccionada o correcta.
+         * @param {Array} options - Arreglo de opciones de una pregunta.
+         * @param {string} optionText - El texto de la opción para buscar su racional.
+         * @returns {string} La explicación o un mensaje de error.
+         */
+        function getRationaleForOption(options, optionText) {
+            const option = options.find(opt => opt.text === optionText);
+            return option ? option.rationale : 'No se encontró la explicación para esta opción.';
+        }
+
+        /**
+         * Revisa las respuestas del usuario, calcula el puntaje y muestra los resultados detallados.
+         */
+        function checkQuiz() {
+            let score = 0;
+            const quizForm = document.getElementById('quiz-form');
+            const resultsDiv = document.getElementById('results');
+            const detailedResultsDiv = document.getElementById('detailed-results');
+            detailedResultsDiv.innerHTML = '<h3>Revisión Detallada</h3><hr style="border-color: #ddd;">';
+            
+            // Ocultar el botón de revisión después de usarlo
+            document.querySelector('.submit-button').style.display = 'none';
+
+            selectedQuestions.forEach((q, index) => {
+                const questionName = `question_${index}`;
+                const selectedOption = quizForm.querySelector(`input[name="${questionName}"]:checked`);
+                const qCard = document.getElementById(`q_card_${index}`);
+                const optionsGroup = qCard.querySelector('.options-group');
+                
+                let isCorrect = false;
+                let userChoiceText = "No respondida";
+                let correctText = getCorrectAnswerText(q.options);
+                let finalRationale = "";
+
+                // Deshabilitar radios y marcar opciones para revisión visual
+                optionsGroup.classList.add('reviewed');
+
+                if (selectedOption) {
+                    userChoiceText = selectedOption.value;
+                    const selectedData = q.options.find(opt => opt.text === userChoiceText);
+                    
+                    if (selectedData && selectedData.isCorrect) {
+                        score++;
+                        isCorrect = true;
+                        finalRationale = selectedData.rationale;
+                    } else if (selectedData) {
+                        finalRationale = selectedData.rationale;
+                    }
+                }
+                
+                // Si no respondió, usar el racional de la respuesta correcta
+                if (!selectedOption) {
+                    finalRationale = getRationaleForOption(q.options, correctText);
+                }
+
+                // Generar el resultado detallado
+                const resultItem = document.createElement('div');
+                resultItem.classList.add('result-item', isCorrect ? 'correct' : 'incorrect');
+                
+                resultItem.innerHTML = `
+                    <h4>${index + 1}. ${q.question}</h4>
+                    <span class="user-choice ${isCorrect ? '' : 'wrong'}">Tu Respuesta: ${userChoiceText}</span>
+                    <span class="correct-answer">Respuesta Correcta: ${correctText}</span>
+                    <p class="rationale-text"><strong>Explicación:</strong> ${finalRationale}</p>
+                `;
+                detailedResultsDiv.appendChild(resultItem);
+
+                // Marcar visualmente la correcta y la del usuario
+                qCard.querySelectorAll('label').forEach(label => {
+                    const text = label.textContent.trim();
+                    const radio = label.querySelector('input[type="radio"]');
+                    if (radio) radio.disabled = true; // Deshabilitar el input
+
+                    if (text === correctText) {
+                         // Marcar Correcta
+                         label.style.backgroundColor = '#dceefc';
+                         label.style.fontWeight = 'bold';
+                         label.style.color = COLOR_PRIMARY_BLUE;
+                         label.insertAdjacentHTML('beforeend', '<span style="float:right; color: var(--color-success); font-weight: bold;">(Correcta)</span>');
+                    } else if (text === userChoiceText && !isCorrect) {
+                        // Marcar Incorrecta del usuario
+                        label.style.backgroundColor = '#ffebee'; 
+                        label.insertAdjacentHTML('beforeend', '<span style="float:right; color: var(--color-error); font-weight: bold;">(Tu Error)</span>');
+                    }
+                });
+
+            });
+
+            const totalQuestions = selectedQuestions.length;
+            const percentage = (score / totalQuestions) * 100;
+
+            resultsDiv.style.display = 'block';
+
+            if (score === totalQuestions) {
+                resultsDiv.classList.remove('result-fail');
+                resultsDiv.classList.add('result-success');
+                resultsDiv.textContent = `¡Felicidades! Obtuviste ${score} de ${totalQuestions} (${percentage.toFixed(0)}%). ¡Dominas el tema!`;
+            } else {
+                resultsDiv.classList.remove('result-success');
+                resultsDiv.classList.add('result-fail');
+                resultsDiv.textContent = `Tu puntaje es: ${score} de ${totalQuestions} (${percentage.toFixed(0)}%). ¡Sigue practicando!`;
+            }
+        }
+
+        // Ejecutar al cargar la página para generar el cuestionario
+        window.onload = function() {
+            renderQuiz();
+            // Inicializar salidas interactivas
+            document.getElementById('output_suma').textContent = "Esperando que presiones 'Ejecutar Suma' con valores.";
+            document.getElementById('output_parimpar').textContent = "Esperando que presiones 'Ejecutar Condicional' con un valor.";
+            document.getElementById('output_contador').textContent = "Presiona 'Ejecutar Bucle' para ver la secuencia.";
+        };
+    </script>
+</body>
+</html>
